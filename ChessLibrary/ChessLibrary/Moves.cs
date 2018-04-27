@@ -31,19 +31,19 @@ namespace ChessLibrary
             {
                 case Figure.whiteKing:
                 case Figure.blackKing:
-                    break;
+                    return CanKingMove();
 
                 case Figure.whiteQueen:
                 case Figure.blackQueen:
-                    break;
+                    return false;
 
                 case Figure.whiteRook:
                 case Figure.blackRook:
-                    break;
+                    return false;
 
                 case Figure.whiteBishop:
                 case Figure.blackBishop:
-                    break;
+                    return false;
 
                 case Figure.whiteKnight:
                 case Figure.blackKnight:
@@ -51,20 +51,30 @@ namespace ChessLibrary
 
                 case Figure.whitePawn:
                 case Figure.blackPawn:
-                    break;
-                   
+                    return false;
+
                 default: return false;
             }
         }
 
+        private bool CanKingMove()
+        {
+            if (fm.AbsDeltaX <= 1 && fm.AbsDeltaY <= 1)
+                return true;
+            return false;
+        }
+
         private bool CanKnightMove()
         {
-
+            if (fm.AbsDeltaX == 1 && fm.AbsDeltaY == 2) return true;
+            if (fm.AbsDeltaX == 2 && fm.AbsDeltaY == 1) return true;
+            return false;
         }
 
         private bool CanMoveTo()
         {
             return fm.to.OnBoard() &&
+                   fm.from != fm.to &&
                    board.GetFigureAt(fm.to).GetColor() != board.moveColor;
         }
 
