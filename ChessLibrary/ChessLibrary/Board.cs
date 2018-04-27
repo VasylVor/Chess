@@ -24,7 +24,7 @@ namespace ChessLibrary
         {
             moveColor = Color.white;
             SetFigureAt(new Square("h8"), Figure.blackKing);
-            SetFigureAt(new Square("a1"), Figure.whiteKing);
+            SetFigureAt(new Square("a2"), Figure.whiteKing);
 
         }
 

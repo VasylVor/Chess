@@ -21,8 +21,8 @@ namespace ChessLibrary
 
         public Square(string e2)
         {
-            if (e2.Length == 2 && e2[0] >= 'a' && e2[0] >= 'h' &&
-                e2[1] >= '1' && e2[1] >= '8')
+            if (e2.Length == 2 && e2[0] >= 'a' && e2[0] <= 'h' &&
+                e2[1] >= '1' && e2[1] <= '8')
             {
                 x = e2[0] - 'a';
                 y = e2[1] - '1';
