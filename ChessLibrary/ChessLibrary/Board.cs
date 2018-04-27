@@ -22,10 +22,35 @@ namespace ChessLibrary
 
         void Init()
         {
-            moveColor = Color.white;
-            SetFigureAt(new Square("h8"), Figure.blackKing);
-            SetFigureAt(new Square("a2"), Figure.whiteKing);
+            //rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+            //0                                           1 2    3 4 5
+            //0 - положення фігур 1 - хто ходить(білі чорні) 2 -  флаги рокировки 
+            //3 - бите поле 4 - кл. ходів 5- №ходу зараз
 
+            string[] parts = fen.Split();
+            if (parts.Length != 6) return;
+            InitFigure(parts[0]);
+            moveColor = (parts[1] == "b") ? Color.black : Color.white;
+            moveNumber = int.Parse(parts[5]);
+            
+        }
+
+        private void InitFigure(string data)
+        {
+            for (int j = 8; j >= 2; j--)
+            {
+                data = data.Replace(j.ToString(), (j - 1).ToString() + "1");
+            }
+            data = data.Replace("1", ".");
+            string[] lines = data.Split('/');
+            for (int y = 7; y >= 0; y--)
+                for (int x = 0; x < 8; x++)
+                {
+                    figures[x, y] = (Figure)lines[7 - y][x];
+                }
+            {
+
+            }
         }
 
         public Figure GetFigureAt(Square square)
