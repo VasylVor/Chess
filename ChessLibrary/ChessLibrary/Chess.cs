@@ -23,6 +23,7 @@ namespace ChessLibrary
         Chess (Board board)
         {
             this.board = board;
+            this.Fen = board.fen;
         }
 
         public Chess Move(string move)// приймає хід в вигляді PE2E4  PE7E8

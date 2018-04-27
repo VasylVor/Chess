@@ -46,11 +46,9 @@ namespace ChessLibrary
             for (int y = 7; y >= 0; y--)
                 for (int x = 0; x < 8; x++)
                 {
-                    figures[x, y] = (Figure)lines[7 - y][x];
+                    figures[x, y] = lines[7-y][x] == '.' ? Figure.none : 
+                        (Figure)lines[7 - y][x];
                 }
-            {
-
-            }
         }
 
         public Figure GetFigureAt(Square square)
@@ -76,7 +74,33 @@ namespace ChessLibrary
             if (moveColor == Color.black)
                 next.moveNumber++;
             next.moveColor = moveColor.FlipColor();
+            next.GenerateFen();
             return next;
+        }
+
+        private void GenerateFen()
+        {
+            fen = FenFigure() + " " +
+                   (moveColor == Color.white ? "w" : "b") + 
+                   " - - 0 " + moveNumber.ToString();
+        }
+
+        private string FenFigure()
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int y = 7; y >= 0; y--)
+            {
+                for (int x = 0; x < 8; x++)
+                    sb.Append(figures[x, y] == Figure.none ? '1' : (char)figures[x, y]);
+                if (y > 0)
+                    sb.Append('/');
+            }
+            string eight = "11111111";
+            for (int j = 8; j >= 2; j--)
+            {
+                sb.Replace(eight.Substring(0, j), j.ToString());
+            }
+            return sb.ToString();
         }
     }
 }
