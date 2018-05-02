@@ -35,7 +35,7 @@ namespace ChessLibrary
 
                 case Figure.whiteQueen:
                 case Figure.blackQueen:
-                    return false;
+                    return CanStraightMove();
 
                 case Figure.whiteRook:
                 case Figure.blackRook:
@@ -55,6 +55,19 @@ namespace ChessLibrary
 
                 default: return false;
             }
+        }
+
+        private bool CanStraightMove()     
+        {
+            Square at = fm.from;
+            do
+            {
+                at = new Square(at.x + fm.SignX, at.y + fm.SignY);
+                if (at == fm.to)
+                    return true;
+            } while (at.OnBoard() &&
+                     board.GetFigureAt(at) == Figure.none);
+            return false;
         }
 
         private bool CanKingMove()
