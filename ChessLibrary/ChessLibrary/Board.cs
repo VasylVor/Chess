@@ -110,6 +110,39 @@ namespace ChessLibrary
             return sb.ToString();
         }
 
+        public bool IsCheck()
+        {
+            Board after = new Board(fen);
+            after.moveColor = moveColor.FlipColor();
+            return after.CanEatKing();
+        }
 
+        bool CanEatKing()
+        {
+            Square badKing = FindBadKing();
+            Moves moves = new Moves(this);
+            foreach (FigureOnSqure fs in YeldFigures())
+            {
+                FigureMoving fm = new FigureMoving(fs, badKing);
+                if (moves.CanMove(fm))
+                    return true;
+            }
+            return false;
+        }
+
+        private Square FindBadKing()
+        {
+            Figure badKing = moveColor == Color.black ? Figure.whiteKing : Figure.blackKing;
+            foreach (Square square in Square.YeldSqueres())
+                if (GetFigureAt(square) == badKing)
+                    return square;
+            return Square.none;
+        }
+
+        public bool IsCheckAfterMove(FigureMoving fm)
+        {
+            Board after = Move(fm);
+            return after.CanEatKing();
+        }
     }
 }

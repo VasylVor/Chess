@@ -35,6 +35,8 @@ namespace ChessLibrary
             FigureMoving fm = new FigureMoving(move);
             if (!moves.CanMove(fm))
                 return this;
+            if(board.IsCheckAfterMove(fm))
+                return this;
             Board nextBoard = board.Move(fm);
             Chess nextCheess = new Chess(nextBoard);
             return nextCheess;
@@ -55,7 +57,8 @@ namespace ChessLibrary
                 {
                     FigureMoving fm = new FigureMoving(fs, to);
                     if (moves.CanMove(fm))
-                        allMoves.Add(fm);
+                        if(!board.IsCheckAfterMove(fm))
+                            allMoves.Add(fm);
                 }
         }
 
@@ -66,6 +69,11 @@ namespace ChessLibrary
             foreach (FigureMoving fm in allMoves)
                 list.Add(fm.ToString());
             return list;
+        }
+
+        public bool IsCheck()
+        {
+            return board.IsCheck();
         }
     }
 }

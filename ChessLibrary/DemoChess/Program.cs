@@ -11,7 +11,7 @@ namespace DemoChess
     {
         static void Main(string[] args)
         {
-            Chess chess = new Chess("rnbqkbnr/1p1111p1/8/8/8/8/1P1111P1/RNBQKBNR w KQkq - 0 1");
+            Chess chess = new Chess();//("rnbqkbnr/1p1111p1/8/8/8/8/1P1111P1/RNBQKBNR w KQkq - 0 1");
             List<string> list;
             Random random = new Random();
 
@@ -20,6 +20,7 @@ namespace DemoChess
                 list = chess.GetAllMoves();
                 Console.WriteLine(chess.Fen);
                 Print(ChessToAscii(chess));
+                Console.WriteLine(chess.IsCheck() ? "Check" : "_");
                 foreach (string moves in list)
                     Console.Write(moves + "\t");
                 Console.WriteLine();
