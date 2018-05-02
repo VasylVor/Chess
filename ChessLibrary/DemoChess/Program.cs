@@ -12,16 +12,21 @@ namespace DemoChess
         static void Main(string[] args)
         {
             Chess chess = new Chess("rnbqkbnr/1p1111p1/8/8/8/8/1P1111P1/RNBQKBNR w KQkq - 0 1");
+            List<string> list;
+            Random random = new Random();
+
             while (true)
             {
+                list = chess.GetAllMoves();
                 Console.WriteLine(chess.Fen);
                 Print(ChessToAscii(chess));
-                foreach (string moves in chess.GetAllMoves())
-                    Console.Write(moves + "\n");
+                foreach (string moves in list)
+                    Console.Write(moves + "\t");
                 Console.WriteLine();
                 Console.Write("> ");
                 string move = Console.ReadLine();
-                if (move == "") break;
+                if (move == "q") break;
+                if (move == "") move = list[random.Next(list.Count)];
                 chess = chess.Move(move);
             }
         }
