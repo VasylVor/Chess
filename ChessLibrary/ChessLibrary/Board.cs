@@ -51,6 +51,13 @@ namespace ChessLibrary
                 }
         }
 
+        public IEnumerable<FigureOnSqure> YeldFigures()
+        {
+            foreach (Square square in Square.YeldSqueres())
+                if (GetFigureAt(square).GetColor() == moveColor)
+                    yield return new FigureOnSqure(GetFigureAt(square), square);
+        }
+
         public Figure GetFigureAt(Square square)
         {
             if (square.OnBoard())
